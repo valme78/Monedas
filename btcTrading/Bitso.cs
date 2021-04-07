@@ -450,7 +450,7 @@ namespace btcTrading
                         sLine = file.ReadLine();
                         if (sLine != "")
                         {
-                            mh = JsonConvert.DeserializeObject<CMoneda_Historial>(sLine);
+                            mh = JsonConvert.DeserializeObject<CMoneda_Historial>(sLine);                             
                             lHistrialmoney.Add(mh);
                         }
 
@@ -460,7 +460,9 @@ namespace btcTrading
                             if (sLine != null)
                             {
                                 mh = JsonConvert.DeserializeObject<CMoneda_Historial>(sLine);
-                                lHistrialmoney.Add(mh);
+                                //valida de que no se repita el dato de la moneda "moneda-dia"
+                                if( !lHistrialmoney.Exists( x=>x.moneda== mh.moneda && x.tiempomax== mh.tiempomax ) )
+                                    lHistrialmoney.Add(mh);
                             }
                             bRegresa = true;
                         }

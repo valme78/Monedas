@@ -124,4 +124,17 @@ namespace EntidadesGenerales
         public double preciomax { get; set; }
         public DateTime fecha { get; set; }
     }
+
+    public class CMonedaMesxdia
+    {
+        public string moneda { get; set; }
+        public DateTime fecha { get; set; }
+
+    }
+
+    public class CEjemplo
+    {
+        public string letra { get; set; }
+        public int num { get; set; }
+    }
 }

@@ -38,6 +38,7 @@ namespace btcTrading
         private List<CBalance> lmiBalances = new List<CBalance>();//lista para obtener el balance que se tiene en la plataforma como bitso,etc..
         List<CDatosAlertas> lAlertas = new List<CDatosAlertas>(); //lista para tener las diferentes alertas a validar
         List<CMoneda_Movto> lMoneymvto = new List<CMoneda_Movto>();// lista para capturar el maximo,minimo y hora de la moneda.
+        List<CMonedaMesxdia> lmonedames = new List<CMonedaMesxdia>(); //lista para guardar las monedas al cambair dia y comparar que no se repitan.
 
         //public delegate CDataPrice midelegadoMonedas(string sMoneda, ListView lvObj); // no se usa
         //public delegate void midelegado1(string sMoneda, ListView lvObj,ref string sTserv);
@@ -86,19 +87,22 @@ namespace btcTrading
 
 
 
-            List<string> lstmon = new List<string>();
+            //lstmon.Add( new List<string,int>  { "A", 1});
+            //lstmon.Add(new List<string,int> {"E" ,2});
+            //List<CEjemplo> ce = new List<CEjemplo>();
 
-
-            lstmon.Add("A");
-            lstmon.Add("E");
-
-            foreach (char s in string.Format("ABCDEFG"))
-            {
-                if ( lstmon.Exists(x=> x.ToString()==s.ToString())  )
-                {
-                    lstmon.Add(s.ToString());
-                }
-            }
+            //ce.Add( new CEjemplo { letra= "A",num= 1});
+            //ce.Add( new CEjemplo { letra= "B",num= 2});
+            //foreach (char s in string.Format("ABCDEFG"))
+            //{
+            //    for (int i=1; i<3; i++ )
+            //    {
+            //        if (ce.Exists(x => x.letra == s.ToString() && x.num== i) )
+            //        {
+            //            ce.Add(new CEjemplo {letra= s.ToString() ,num= i+5});
+            //        }
+            //    }
+            //}
 
             btnActualizamonhistorial.Enabled = false;
             bOrdenActiva = false;
@@ -1645,20 +1649,26 @@ namespace btcTrading
             {
                 //StreamWriter wr = new StreamWriter(sRuta);
                 cm.valorClose =  double.Parse(consultapreciomoneda(cm.moneda));// guarda el ultim pecio de la moneda.
-
+                
                 //if (!Directory.Exists(@"C:\sys\tradingboots\historial"))
                 if (!Directory.Exists(string.Format(@"C:\sys\tradingboots\historial\{0}\{1}\",sAnio,sMes)) )
                     Directory.CreateDirectory(string.Format(@"C:\sys\tradingboots\historial\{0}\{1}\", sAnio, sMes));
-                //Crear el archivo con la informacion
+                
+                //valida de que no se repita el dato de la moneda "moneda-dia"
+                if (!lmonedames.Exists(x => x.moneda == cm.moneda && x.fecha == cm.tiempoMax))
+                {
+                    lmonedames.Add(new CMonedaMesxdia {  moneda= cm.moneda,fecha= cm.tiempoMax });
 
-                var jsontxt = JsonConvert.SerializeObject(cm) + Environment.NewLine;
-                if (!File.Exists(sRuta))
-                {
-                    File.WriteAllText(sRuta, jsontxt);
-                }
-                else
-                {
-                    File.AppendAllText(sRuta, jsontxt);
+                    //Crear el archivo con la informacion
+                    var jsontxt = JsonConvert.SerializeObject(cm) + Environment.NewLine;
+                    if (!File.Exists(sRuta))
+                    {
+                        File.WriteAllText(sRuta, jsontxt);
+                    }
+                    else
+                    {
+                        File.AppendAllText(sRuta, jsontxt);
+                    }
                 }
 
                 //using (FileStream fs = File.OpenWrite(sRuta)) // CreateText(sRuta))
