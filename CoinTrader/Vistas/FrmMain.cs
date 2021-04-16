@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
 using Bitso_Entitys;
 using EntidadesGenerales;
 
@@ -21,7 +22,12 @@ namespace CoinTrader
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
             configuragrafica();
+
+            Bitso bit = new Bitso(true);
+            bit.consultamonedasBitso(dgvMonedas);
         }
 
         private void configuragrafica()
@@ -88,21 +94,25 @@ namespace CoinTrader
             chart1.Series["Mes"]["ShowOpenclose"] = "Both";
             chart1.DataManipulator.IsStartFromFirst = true;
 
-            
+            //chart1.Series["Mes"].Legend = "xrp_mxn";
+            //chart1.Series["Mes"].Name = "XRP_MXN";
+            //chart1.Titles.Add("Historial del Mes..");
+
+
             foreach (var his in lstHistrialmoney)
             {
-
                 if (his.moneda == "xrp_mxn")
-                {
-                    
+                {                    
                     {
                         string sTip = string.Format("max={0}\nmin={1}\nOpen={2}\nClose={3}", 0, 0, double.Parse(his.valormax), double.Parse(his.valormin));
                         
                         System.Windows.Forms.DataVisualization.Charting.DataPoint item = new System.Windows.Forms.DataVisualization.Charting.DataPoint();
                         item.ToolTip = sTip;
                         item.XValue = his.tiempomax.Day;// DateTime.Now.Day;//sBook[i].tiempo.ToOADate();
-                                                               //item.YValues = new double[] { 7.4, 4.5, 5.20, 6.40 };
-                        item.YValues = new double[] { 8.0,4.0,double.Parse(his.valormax), double.Parse(his.valormin) };
+                                                        //item.YValues = new double[] { 7.4, 4.5, 5.20, 6.40 };
+                                                        //item.YValues = new double[] { 8.0,4.0,double.Parse(his.valormax), double.Parse(his.valormin) };
+                                                        //"High,Low,Open,Close"
+                        item.YValues = new double[] { double.Parse(his.valormax), double.Parse(his.valormin),double.Parse(his.valoropen), double.Parse(his.valorclose) };
                         chart1.Series["Mes"].Points.Add(item);
 
                         //System.Windows.Forms.DataVisualization.Charting.DataPoint item2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint();
@@ -122,6 +132,16 @@ namespace CoinTrader
             {
                 this.Close();
             }
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvMonedas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

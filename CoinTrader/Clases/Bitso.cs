@@ -99,7 +99,8 @@ namespace CoinTrader
         {
             string sMensajeError = string.Empty;
             var requestPath = BITSO_VERSION_PREFIX + url;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(BITSO_API_URL + requestPath);
+            var sUri = BITSO_API_URL + requestPath;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(sUri);
 
             if (signRequest)
             {
@@ -389,6 +390,67 @@ namespace CoinTrader
                 sMensajeError = string.Format("Error:{0} ,Moneda[{1}][#2], d |h[{2}]\n", ex.Message, sMoneda, getTime());
                 MostrarMensaje(sMensajeError, mp);
                 //MessageBox.Show(sMensajeError);
+            }
+        }//fin
+
+
+        public void consultamonedasBitso(DataGridView dgvObj)
+        {
+            //CMoneyPrice mp = new CMoneyPrice();
+            //double dporcentaje = 0.0, dvar = 0.0;
+            string sTexto = string.Empty;
+            
+            try
+            {
+                //consulta las monedas que usa bitso.
+                
+                foreach (var mon in GetTickers() )
+                {
+                    if ( mon.Book.Trim().Substring(mon.Book.Trim().Length -4, 4 ) == "_mxn" ) //  || mon.Book == "xrp_mxn")
+                    {
+
+                        dgvObj.Rows.Add(new object[] { mon.Book ,
+                                                       string.Format("{0,14:N2}", Convert.ToDouble(mon.PriceHigh)),
+                                                       string.Format("{0,14:N2}", Convert.ToDouble(mon.PriceLow)) });
+
+                        //lvObj.Items[sMoneda].SubItems[4].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.LastTradedPrice));
+                        //dvar = Convert.ToDouble(ticker.LastTradedPrice) - Convert.ToDouble(ticker.PriceHigh);
+                        //dporcentaje = ((dvar / Convert.ToDouble(ticker.PriceLow)) * 100.00);
+
+                    }
+                    else
+                    {
+                       
+                        //dgvObj.Rows.Add( new object[] { mon.Book, mon.PriceHigh, mon.PriceLow });                       
+                    }
+                }
+                //dPrice.book = sMoneda;
+               /* mp.ask = ticker.Ask;
+                mp.bid = ticker.Bid;
+                mp.book = ticker.Book;
+                mp.created_at = DateTime.Parse(ticker.CreatedAt);
+                mp.high = ticker.PriceHigh;
+                mp.last = ticker.LastTradedPrice;
+                mp.low = ticker.PriceLow;
+                mp.volume = ticker.Volume;
+                mp.vwap = ticker.VolumeWeightedAvgPrice;*/
+
+                
+                //MostrarMensaje("", mp);
+
+            }
+            catch (WebException ex)
+            {
+                var sMensajeError = string.Format("stauts: {0}, Error:{1}", ex.Status.ToString(), ex.Message);
+                // MostrarMensaje(sMensajeError, mp);
+                MessageBox.Show(sMensajeError);
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show("Ocurrio un error: [" + sMoneda +" ] :" + ex.Message); 
+                sMensajeError = string.Format("Error:{0} ", ex.Message);
+                //MostrarMensaje(sMensajeError, mp);
+                MessageBox.Show(sMensajeError);
             }
         }//fin
 

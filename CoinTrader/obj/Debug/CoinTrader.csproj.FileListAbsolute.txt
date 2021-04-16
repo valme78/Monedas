@@ -1,0 +1,13 @@
+C:\proyectos\robot\CoinTrader\CoinTrader\bin\Debug\CoinTrader.exe
+C:\proyectos\robot\CoinTrader\CoinTrader\bin\Debug\CoinTrader.pdb
+C:\proyectos\robot\CoinTrader\CoinTrader\bin\Debug\Newtonsoft.Json.dll
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.csprojAssemblyReference.cache
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.Form1.resources
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.Properties.Resources.resources
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.Vistas.FrmLogin.resources
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.Vistas.FrmWelcome.resources
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.csproj.GenerateResource.cache
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.csproj.CoreCompileInputs.cache
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.csproj.CopyComplete
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.exe
+C:\proyectos\robot\CoinTrader\CoinTrader\obj\Debug\CoinTrader.pdb
