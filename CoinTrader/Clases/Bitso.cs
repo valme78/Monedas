@@ -393,8 +393,55 @@ namespace CoinTrader
             }
         }//fin
 
+        public void consultamoneda(string sMoneda, DataGridView lvObj, Int32 index)
+        {
+            //CMoneyPrice mp = new CMoneyPrice();
+            
+            string sTexto = string.Empty;
+            try
+            {
+                var ticker = GetTicker(sMoneda);
 
-        public void consultamonedasBitso(DataGridView dgvObj)
+                lvObj.Rows[index].Cells["dgcolpreciomax"].Value = string.Format("{0,14:N2}", Convert.ToDouble(ticker.Bid ) );
+                lvObj.Rows[index].Cells["dgcolpreciomin"].Value = string.Format("{0,14:N2}", Convert.ToDouble(ticker.PriceLow ) );
+
+                //lvObj.Items[sMoneda].SubItems[1].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.Ask));
+                //lvObj.Items[sMoneda].SubItems[2].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.PriceHigh));
+                //lvObj.Items[sMoneda].SubItems[3].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.PriceLow));
+                //lvObj.Items[sMoneda].SubItems[4].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.LastTradedPrice));
+
+
+
+                //mp.ask = ticker.Ask;
+                //mp.bid = ticker.Bid;
+                //mp.book = ticker.Book;
+                //mp.created_at = DateTime.Parse(ticker.CreatedAt);
+                //mp.high = ticker.PriceHigh;
+                //mp.last = ticker.LastTradedPrice;
+                //mp.low = ticker.PriceLow;
+                //mp.volume = ticker.Volume;
+                //mp.vwap = ticker.VolumeWeightedAvgPrice;
+
+                //sTServ = DateTime.Parse(ticker.CreatedAt).ToShortTimeString(); // dPrice.created_at.ToShortTimeString();
+               // MostrarMensaje("", mp);
+
+            }
+            catch (WebException ex)
+            {
+                var sMensajeError = string.Format("stauts: {0}, Error:{1}, moneda[{2}][#2] ,d |h[{3}]\n", ex.Status.ToString(), ex.Message, sMoneda, "000" /*getTime()*/);
+                MostrarMensaje(sMensajeError, null);
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show("Ocurrio un error: [" + sMoneda +" ] :" + ex.Message); 
+                sMensajeError = string.Format("Error:{0} ,Moneda[{1}][#2], d |h[{2}]\n", ex.Message, sMoneda, getTime());
+                MostrarMensaje(sMensajeError, null);
+                //MessageBox.Show(sMensajeError);
+            }
+        }//fin
+
+
+        public void consultamonedasBitso(DataGridView dgvObj, ref List<string> lstMon)
         {
             //CMoneyPrice mp = new CMoneyPrice();
             //double dporcentaje = 0.0, dvar = 0.0;
@@ -412,6 +459,7 @@ namespace CoinTrader
                         dgvObj.Rows.Add(new object[] { mon.Book ,
                                                        string.Format("{0,14:N2}", Convert.ToDouble(mon.PriceHigh)),
                                                        string.Format("{0,14:N2}", Convert.ToDouble(mon.PriceLow)) });
+                        lstMon.Add(mon.Book);
 
                         //lvObj.Items[sMoneda].SubItems[4].Text = string.Format("{0,14:N2}", Convert.ToDouble(ticker.LastTradedPrice));
                         //dvar = Convert.ToDouble(ticker.LastTradedPrice) - Convert.ToDouble(ticker.PriceHigh);

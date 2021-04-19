@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Clases\Bitso.cs" />
     <Compile Include="Clases\Bitso_Entitys.cs" />
+    <Compile Include="Clases\CUtilerias.cs" />
     <Compile Include="Clases\EntidadesGenerales.cs" />
     <Compile Include="Vistas\FrmMain.cs">
       <SubType>Form</SubType>

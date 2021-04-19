@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -40,6 +41,9 @@
             this.dgcolmoneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcolpreciomax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcolpreciomin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tHilogral = new System.Windows.Forms.Timer(this.components);
+            this.tHiloOrdenes = new System.Windows.Forms.Timer(this.components);
+            this.txtlogerror = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonedas)).BeginInit();
             this.SuspendLayout();
@@ -124,12 +128,29 @@
             this.dgcolpreciomin.ReadOnly = true;
             this.dgcolpreciomin.Width = 80;
             // 
+            // tHilogral
+            // 
+            this.tHilogral.Interval = 6000;
+            this.tHilogral.Tick += new System.EventHandler(this.tHilogral_Tick);
+            // 
+            // tHiloOrdenes
+            // 
+            this.tHiloOrdenes.Interval = 6000;
+            // 
+            // txtlogerror
+            // 
+            this.txtlogerror.Location = new System.Drawing.Point(12, 12);
+            this.txtlogerror.Name = "txtlogerror";
+            this.txtlogerror.Size = new System.Drawing.Size(813, 20);
+            this.txtlogerror.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(42)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(981, 558);
+            this.Controls.Add(this.txtlogerror);
             this.Controls.Add(this.dgvMonedas);
             this.Controls.Add(this.chart1);
             this.KeyPreview = true;
@@ -141,6 +162,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonedas)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -151,6 +173,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcolmoneda;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcolpreciomax;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcolpreciomin;
+        private System.Windows.Forms.Timer tHilogral;
+        private System.Windows.Forms.Timer tHiloOrdenes;
+        private System.Windows.Forms.TextBox txtlogerror;
     }
 }
 
